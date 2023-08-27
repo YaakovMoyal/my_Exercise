@@ -63,8 +63,6 @@ class Square extends Rectangle {
   }
 }
 
-// let my_rect = new ColoredRectangle(3, 6, "red");
-// console.log(my_rect.area);
 
 //
 class Triangle extends Shape {
