@@ -1,10 +1,14 @@
 // הגדרת מחלקה ראשית
-class Person {
+abstract class Person {
   firstName: string;
   lastName: string;
   constructor(firstName: string, lastName: string) {
     this.firstName = firstName;
     this.lastName = lastName;
+  }
+  getInfo() {
+    const info = `name: ${this.firstName} ${this.lastName}`;
+    console.log(info);
   }
 }
 // הגדרת מחלקת מטופלים
@@ -14,7 +18,7 @@ class Patient extends Person {
     super(firstName, lastName);
     this.patientID = patientID;
   }
-  getInfoOnPatient() {
+  getInfo() {
     const info = `name: ${this.firstName} ${this.lastName} ID: ${this.patientID}`;
     console.log(info);
   }
@@ -23,18 +27,18 @@ class Patient extends Person {
 // הגדרת מחלקת דוקטור
 class Doctor extends Person {
   doctorID: number;
-  specialization: number;
+  specialization: string;
   constructor(
     firstName: string,
     lastName: string,
     doctorID: number,
-    specialization: number
+    specialization: string
   ) {
     super(firstName, lastName);
     this.doctorID = doctorID;
     this.specialization = specialization;
   }
-  getInfoOnDoctor() {
+  getInfo() {
     const info = `name: ${this.firstName} ${this.lastName} , ID: ${this.doctorID},specialization: ${this.specialization}`;
     console.log(info);
   }
@@ -52,7 +56,7 @@ class Appointment {
     this.time = time;
   }
   getInfoAppointment() {
-    const info = `patient: ${this.patient.getInfoOnPatient()}, doctor: ${this.doctor.getInfoOnDoctor()}, date: ${
+    const info = `patient: ${this.patient.getInfo()}, doctor: ${this.doctor.getInfo()}, date: ${
       this.date
     }, time: ${this.time}`;
     console.log(info);
@@ -62,9 +66,9 @@ class Appointment {
 // הגדרת מחלקת ביה"ח
 class Hospital {
   nameHospital: string;
-  patients: Patient[];
+  private patients: Patient[];
   doctors: Doctor[];
-  appointments: Appointment[];
+  private appointments: Appointment[];
   constructor(
     nameHospital: string,
     patients: Patient[],
@@ -79,14 +83,17 @@ class Hospital {
   //הוספת מטופל
   addPatient(patient: Patient) {
     this.patients.push(patient);
+    return this;
   }
   //הוספת דוקטור
   addDoctor(doctor: Doctor) {
     this.doctors.push(doctor);
+    return this;
   }
   //הוספת תור
   addAppointment(appointment: Appointment) {
     this.appointments.push(appointment);
+    return this;
   }
 
   //הצגת כל התורים
@@ -122,6 +129,37 @@ class Hospital {
 }
 
 //תרגיל 7
+// just on class Person
+
 //תרגיל 8
+// add get info in class Person
+
 //תרגיל 9
+// patients, doctors
+
 //תרגיל 10
+const patient1 = new Patient("yaakov", "moyal", 208309856);
+const patient2 = new Patient("israel", "israeli", 123456789);
+const patient3 = new Patient("moshe", "cohen", 987654321);
+
+const doctor1 = new Doctor("eli", "levi", 12345, "legs");
+const doctor2 = new Doctor("rooty", "israeli", 54321, "head");
+
+const appointment1 = new Appointment(patient1, doctor1, "13/9/2023", "14:00");
+const appointment2 = new Appointment(patient2, doctor2, "21/8/2023", "9:00");
+const appointment3 = new Appointment(patient3, doctor2, "21/8/2023", "10:00");
+
+const arrPatient = [patient1, patient2, patient3];
+const arrDoctor = [doctor1, doctor2];
+const arrAppointment = [appointment1, appointment2, appointment3];
+
+const hospital = new Hospital("Shiba", arrPatient, arrDoctor, arrAppointment);
+
+//תרגיל 11
+hospital.addPatient(patient1);
+hospital.addDoctor(doctor1);
+hospital.addAppointment(appointment1);
+hospital.getAllAppointment();
+hospital.getAppointmentByDate("21/8/2023");
+hospital.getAppointmentByDoctor(12345);
+hospital.getAppointmentByPatient(123456789);
