@@ -55,7 +55,7 @@ class Patient extends Person {
 }
 
 // הגדרת מחלקת צוות
-class MedicalStaff extends Person {
+abstract class MedicalStaff extends Person {
   staffID: number;
   position: string;
   department: string;
@@ -76,7 +76,7 @@ class MedicalStaff extends Person {
 }
 
 // הגדרת מחלקת דוקטור
-class Doctor extends MedicalStaff implements Person {
+class Doctor extends MedicalStaff {
   doctorID: number;
   specialization: string;
   constructor(
@@ -216,8 +216,28 @@ const patient3 = new Patient(
   demoArrAppointment
 );
 
-const doctor1 = new Doctor("eli", "levi", 53, "tlv",12345, '?','?', 12345, "legs");
-const doctor2 = new Doctor("rooty", "israeli", 48, "tlv",54321,'?','?', 54321, "head");
+const doctor1 = new Doctor(
+  "eli",
+  "levi",
+  53,
+  "tlv",
+  12345,
+  "?",
+  "?",
+  12345,
+  "legs"
+);
+const doctor2 = new Doctor(
+  "rooty",
+  "israeli",
+  48,
+  "tlv",
+  54321,
+  "?",
+  "?",
+  54321,
+  "head"
+);
 
 const appointment1 = new Appointment(patient1, doctor1, "13/9/2023", "14:00");
 const appointment2 = new Appointment(patient2, doctor2, "21/8/2023", "9:00");
